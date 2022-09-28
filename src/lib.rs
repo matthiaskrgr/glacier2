@@ -8,11 +8,12 @@ pub use rayon;
 
 static RUSTC: &str = "rustc";
 static ICES_PATH: &str = "ices";
+static FIXED_PATH: &str = "fixed";
 static SHELL: &str = "bash";
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum TestMode {
-    SingleFile,
+    RustFile,
     ShellScript,
 }
 
@@ -25,7 +26,7 @@ pub struct ICE {
 impl ICE {
     fn from_path(path: PathBuf) -> Result<Self> {
         let mode = match path.extension().and_then(|e| e.to_str()) {
-            Some("rs") => TestMode::SingleFile,
+            Some("rs") => TestMode::RustFile,
             Some("sh") => TestMode::ShellScript,
             _ => bail!("unknown ICE test extension: {}", path.display()),
         };
@@ -49,7 +50,7 @@ impl ICE {
     fn test(self) -> Result<TestResult> {
         let workdir = tempfile::tempdir()?;
         let output = match self.mode {
-            TestMode::SingleFile => Command::new(RUSTC)
+            TestMode::RustFile => Command::new(RUSTC)
                 .args(&["--edition", "2018"])
                 .arg(std::fs::canonicalize(&self.path)?)
                 .current_dir(workdir.path())
@@ -159,7 +160,7 @@ impl TestResult {
     pub fn syntax(&self) -> &'static str {
         match self.ice.mode {
             TestMode::ShellScript => "bash",
-            TestMode::SingleFile => "rust",
+            TestMode::RustFile => "rust",
         }
     }
 }
