@@ -24,6 +24,8 @@ jobs:
         run: rustup-toolchain-install-master -f -n master -c rustc-dev llvm-tools rust-src clippy rustfmt
       - name: build
         run: cargo build --release
+      - name: run
+        run: cargo run --release
       # clone rustc to run icemaker in
 #      - name: clone rustc
 #        run: git clone https://github.com/rust-lang/rust rust --depth 1
