@@ -189,16 +189,20 @@ pub fn discover(dir: &str) -> Result<Vec<ICE>> {
     for entry in std::fs::read_dir(dir)? {
         let entry = entry?;
         // Ignore dotfiles
-        if entry
+        if !entry
             .path()
             .file_name()
             .and_then(|n| n.to_str())
             .unwrap_or("")
             .starts_with('.')
+            // .rs or .sh file
+            && (entry.path().extension().and_then(|s| s.to_str()) == Some("rs") 
+            || entry.path().extension().and_then(|s| s.to_str()) == Some("sh"))
+            // ignore directories
+            && entry.path().iter().count() == 2
         {
-            continue;
+            ices.push(ICE::from_path(entry.path())?);
         }
-        ices.push(ICE::from_path(entry.path())?);
     }
 
     ices.sort_unstable_by(|a, b| {
@@ -218,6 +222,7 @@ pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResul
         "nightly toolchain is not installed, run `rustup install nightly`"
     );
     let ices = discover(ICES_PATH)?;
+    let ices = discover(FIXED_PATH)?;
 
     eprintln!(
         "running {} tests for {}",
