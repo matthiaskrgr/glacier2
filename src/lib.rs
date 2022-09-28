@@ -70,7 +70,11 @@ impl ICE {
         Ok(TestResult {
             ice: self,
             outcome: match output.status.code() {
-                _ if stderr.contains("error: internal compiler error") => Outcome::ICEd,
+                _ if stderr.contains("error: internal compiler error")
+                    || stderr.contains("panicked at") =>
+                {
+                    Outcome::ICEd
+                }
                 Some(0) => Outcome::NoError,
                 Some(101) => Outcome::ICEd, // An ICE will cause an error code of 101
                 // Bash uses 128+N for processes terminated by signal N
