@@ -9,6 +9,7 @@ pub use rayon;
 static RUSTC: &str = "rustc";
 static ICES_PATH: &str = "ices";
 static FIXED_PATH: &str = "fixed";
+static UNSORTED: &str = "unsorted";
 static SHELL: &str = "bash";
 
 // default rust edition to use for checking
@@ -224,15 +225,17 @@ pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResul
     );
     let ices = discover(ICES_PATH)?;
     let fixed = discover(FIXED_PATH)?;
+    let unsorted = discover(FIXED_PATH)?;
 
     eprintln!(
         "running {} tests for {}",
-        ices.len() + fixed.len(),
+        ices.len() + fixed.len() + unsorted.len(),
         String::from_utf8_lossy(&output.stdout)
     );
 
     let ice_result = ices.into_par_iter().map(|ice| ice.test());
     let fixed_result = fixed.into_par_iter().map(|ice| ice.test());
+    let unsorted_results = unsorted.into_par_iter().map(|ice| ice.test());
 
-    Ok(ice_result.chain(fixed_result))
+    Ok(ice_result.chain(fixed_result).chain(unsorted_results))
 }
