@@ -11,6 +11,9 @@ static ICES_PATH: &str = "ices";
 static FIXED_PATH: &str = "fixed";
 static SHELL: &str = "bash";
 
+// default rust edition to use for checking
+static DEFAULT_EDITION: &str = "2021";
+
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum TestMode {
     RustFile,
@@ -51,7 +54,7 @@ impl ICE {
         let workdir = tempfile::tempdir()?;
         let output = match self.mode {
             TestMode::RustFile => Command::new(RUSTC)
-                .args(&["--edition", "2018"])
+                .args(["--edition", DEFAULT_EDITION])
                 .arg(std::fs::canonicalize(&self.path)?)
                 .current_dir(workdir.path())
                 .output()?,
