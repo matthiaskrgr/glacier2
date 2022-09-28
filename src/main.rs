@@ -3,6 +3,8 @@ use glacier::{Outcome, TestResult};
 use rayon::prelude::*;
 
 fn main() -> Result<()> {
+    let results = glacier::test_all()?.collect::<Result<Vec<TestResult>, _>>()?;
+
     let failed = glacier::test_all()?
         .filter(|res| {
             if let Ok(test) = res {
