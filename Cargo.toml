@@ -1,8 +1,8 @@
 [package]
-name = "glacier"
-version = "0.1.0"
 authors = ["Pietro Albini <pietro@pietroalbini.org>"]
 edition = "2021"
+name = "glacier"
+version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -14,9 +14,8 @@ tempfile = "3.1.0"
 
 [workspace]
 members = [
-    "autofix",
-    "labeler"
+  "autofix",
 ]
 
 [patch.crates-io]
-glacier = { path = "." }
+glacier = {path = "."}
