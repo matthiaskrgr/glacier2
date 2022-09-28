@@ -40,5 +40,5 @@ jobs:
         uses: ad-m/github-push-action@master
         if: steps.repo_untouched.outputs.exit_code == 0
         with:
-          github_token: ${{ secrets.ARCTICE_SECRET }}
+          github_token: ${{ secrets.GLACIER_SECRET }}
           branch: ${{ github.ref }}
