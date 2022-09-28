@@ -26,6 +26,8 @@ jobs:
         run: cargo build --release
       - name: run glacier2
         run: cargo run --release
+      - name: find
+        run: find .
       # clone rustc to run icemaker in
 #      - name: clone rustc
 #        run: git clone https://github.com/rust-lang/rust rust --depth 1
