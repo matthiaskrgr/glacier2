@@ -64,7 +64,7 @@ impl ICE {
                 .output()?,
         };
 
-        let stdout = String::from_utf8_lossy(&output.stdout).to_string();
+        let _stdout = String::from_utf8_lossy(&output.stdout).to_string();
         let stderr = String::from_utf8_lossy(&output.stderr).to_string();
 
         Ok(TestResult {
