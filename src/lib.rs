@@ -222,13 +222,16 @@ pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResul
         "nightly toolchain is not installed, run `rustup install nightly`"
     );
     let ices = discover(ICES_PATH)?;
-    let ices = discover(FIXED_PATH)?;
+    let fixed = discover(FIXED_PATH)?;
 
     eprintln!(
         "running {} tests for {}",
-        ices.len(),
+        ices.len() + fixed.len(),
         String::from_utf8_lossy(&output.stdout)
     );
 
-    Ok(ices.into_par_iter().map(|ice| ice.test()))
+    let ice_result = ices.into_par_iter().map(|ice| ice.test());
+    let fixed_result = fixed.into_par_iter().map(|ice| ice.test());
+
+    Ok(ice_result.chain(fixed_result))
 }
