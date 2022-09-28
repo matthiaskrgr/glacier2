@@ -82,8 +82,8 @@ impl ICE {
                 Some(_) => Outcome::Errored,
                 None => Outcome::ICEd, // If rustc receives a signal treat is as an ICE
             },
-            stdout,
-            stderr,
+            //    stdout,
+            //    stderr,
         })
     }
 }
@@ -99,8 +99,8 @@ pub enum Outcome {
 pub struct TestResult {
     ice: ICE,
     outcome: Outcome,
-    stdout: String,
-    stderr: String,
+    //stdout: String,
+    //stderr: String,
 }
 
 impl TestResult {
@@ -111,14 +111,15 @@ impl TestResult {
     pub fn outcome(&self) -> Outcome {
         self.outcome
     }
+    /*
+        pub fn stdout(&self) -> &str {
+            &self.stdout
+        }
 
-    pub fn stdout(&self) -> &str {
-        &self.stdout
-    }
-
-    pub fn stderr(&self) -> &str {
-        &self.stderr
-    }
+        pub fn stderr(&self) -> &str {
+            &self.stderr
+        }
+    */
 
     pub fn title(&self) -> String {
         let path = self.path().display();
@@ -134,10 +135,10 @@ impl TestResult {
         if self.outcome != Outcome::ICEd {
             let mut out = String::new();
             out.push_str("=== stdout ===\n");
-            out.push_str(self.stdout());
+            /* out.push_str(self.stdout());
             out.push_str("=== stderr ===\n");
             out.push_str(self.stderr());
-            out.push_str("==============");
+            out.push_str("=============="); */
 
             Some(out.replace('\0', "NUL"))
         } else {
