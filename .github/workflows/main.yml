@@ -1,18 +1,68 @@
-name: Continuous Integration
+name: main
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+env:
+  CARGO_TERM_COLOR: always
 
 jobs:
-  main:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+      # make sure nightly, beta and stable are installed
+      - name: install nightly
+        run: rustup install nightly
+      # install master installer
+      - name: install rustup-toolchain-install-master
+        run: cargo install --git https://github.com/kennytm/rustup-toolchain-install-master
+      - name: install master toolchain
+        run: rustup-toolchain-install-master -f -n master -c rustc-dev llvm-tools rust-src clippy rustfmt
+      # clone rustc to run icemaker in
+#      - name: clone rustc
+#        run: git clone https://github.com/rust-lang/rust rust --depth 1
+#      - name: rust git version
+#        run: git log -1
+#        working-directory: rust
+#      - name: copy logs into rustc repo
+#        run: cp -f errors.json rust/errors.json
+#      - name: copy config.toml into rustc repo
+#        run: cp -f config.toml rust/config.toml
+#      - name: check out submodules
+#        run: git submodule update --init
+#        working-directory: rust
+#      - name: clone icemaker
+#        run: git clone https://github.com/matthiaskrgr/icemaker icemaker
+#      - name: icemaker version
+#        run: git log -1
+#        working-directory: icemaker
+#      - name: build icemaker
+#        run: cargo build --release --features ci
+#        working-directory: icemaker
+#      - name: run icemaker on rustc
+#        run: ../icemaker/target/release/icemaker -s
+#        working-directory: rust
+#      - name: copy logs into repo root
+#        run: cp -f rust/errors.json errors.json
+#      - name: check if logs are untouched
+#        id: repo_untouched
+#        run: git diff --exit-code errors.json
+#        continue-on-error: true
+#      - name: Commit files
+#        run: |
+#          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#          git config --local user.name "github-actions[bot]"
+#          git add errors.json || true
+#          git commit -m "update logs" || true
+#        if: steps.repo_untouched.outputs.exit_code == 0
+#      - name: Push changes
+#        uses: ad-m/github-push-action@master
+#        if: steps.repo_untouched.outputs.exit_code == 0
+#        with:
+#          github_token: ${{ secrets.ARCTICE_SECRET }}
+#          branch: ${{ github.ref }}
 
-      - name: tab character check
-        run: if grep -P '\t' -rn --color ices fixed; then exit 1; fi
-
-      - name: Build
-        uses: ./.github/actions/build
-
-      - run: ./target/release/glacier
