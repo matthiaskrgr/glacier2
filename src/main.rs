@@ -19,7 +19,8 @@ fn main() -> Result<()> {
         .map(|path| {
             // the path of an ice file
             let from = path;
-            let to = std::path::PathBuf::from("ices");
+            let mut to = std::path::PathBuf::from("ices");
+            to.push(from.file_name().unwrap());
             (from, to)
         })
         // don't move if src == dest
@@ -34,7 +35,8 @@ fn main() -> Result<()> {
         .map(|path| {
             // the path of file that does not ice file
             let from = path;
-            let to = std::path::PathBuf::from("fixed");
+            let mut to = std::path::PathBuf::from("fixed");
+            to.push(from.file_name().unwrap());
             (from, to)
         })
         // don't move if src == dest
