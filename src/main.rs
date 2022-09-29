@@ -16,8 +16,8 @@ fn main() -> Result<()> {
     // move files to their right place:
     // ices to ices
     ices.map(|res| res.path())
-        // only move ices inside "fixed" folder
-        .filter(|p| p.iter().next().and_then(|p| p.to_str()) == Some("fixed"))
+        // don't move ices already inside "ices" folder
+        .filter(|p| p.iter().next().and_then(|p| p.to_str()) != Some("ices"))
         .for_each(|p| {
             let from = p;
             let to = p.to_str().unwrap().replace("fixed", "ices");
@@ -27,8 +27,8 @@ fn main() -> Result<()> {
     // fixed to fixed
     fixed
         .map(|res| res.path())
-        // only move fixed files inside "ices" folder
-        .filter(|p| p.iter().next().and_then(|p| p.to_str()) == Some("ices"))
+        // don't move fixed  files already inside "fixed" folder
+        .filter(|p| p.iter().next().and_then(|p| p.to_str()) != Some("fixed"))
         .for_each(|p| {
             let from = p;
             let to = p.to_str().unwrap().replace("ices", "fixed");
