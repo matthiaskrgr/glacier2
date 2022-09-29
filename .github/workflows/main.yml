@@ -22,13 +22,12 @@ jobs:
         run: cargo install --git https://github.com/kennytm/rustup-toolchain-install-master
       - name: install master toolchain
         run: rustup-toolchain-install-master -f -n master -c rustc-dev llvm-tools rust-src clippy rustfmt
+      - name: make master the default toolchain
+        run: rustup default master
       - name: build
         run: cargo build --release
       - name: run glacier2
         run: cargo run --release
-      - name: find
-        run: find .
-
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
