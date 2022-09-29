@@ -16,22 +16,30 @@ fn main() -> Result<()> {
     // move files to their right place:
     // ices to ices
     ices.map(|res| res.path())
-        // don't move ices already inside "ices" folder
-        .filter(|p| p.iter().next().and_then(|p| p.to_str()) != Some("ices"))
-        .for_each(|p| {
-            let from = p;
-            let to = p.to_str().unwrap().replace("fixed", "ices");
+        .map(|path| {
+            // the path of an ice file
+            let from = path;
+            let to = std::path::PathBuf::from("ices");
+            (from, to)
+        })
+        // don't move if src == dest
+        .filter(|(from, to)| from != to)
+        .for_each(|(from, to)| {
             std::fs::rename(from, to).unwrap();
         });
 
     // fixed to fixed
     fixed
         .map(|res| res.path())
-        // don't move fixed  files already inside "fixed" folder
-        .filter(|p| p.iter().next().and_then(|p| p.to_str()) != Some("fixed"))
-        .for_each(|p| {
-            let from = p;
-            let to = p.to_str().unwrap().replace("ices", "fixed");
+        .map(|path| {
+            // the path of file that does not ice file
+            let from = path;
+            let to = std::path::PathBuf::from("fixed");
+            (from, to)
+        })
+        // don't move if src == dest
+        .filter(|(from, to)| from != to)
+        .for_each(|(from, to)| {
             std::fs::rename(from, to).unwrap();
         });
 
