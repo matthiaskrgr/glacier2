@@ -9,7 +9,7 @@ pub use rayon;
 static RUSTC: &str = "rustc";
 static ICES_PATH: &str = "ices";
 static FIXED_PATH: &str = "fixed";
-static UNSORTED: &str = "unsorted";
+static UNSORTED_PATH: &str = "unsorted";
 static SHELL: &str = "bash";
 
 // default rust edition to use for checking
@@ -225,7 +225,7 @@ pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResul
     );
     let ices = discover(ICES_PATH)?;
     let fixed = discover(FIXED_PATH)?;
-    let unsorted = discover(FIXED_PATH)?;
+    let unsorted = discover(UNSORTED_PATH)?;
 
     eprintln!(
         "running {} tests for {}",
