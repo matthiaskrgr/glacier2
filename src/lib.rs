@@ -11,6 +11,7 @@ static ICES_PATH: &str = "ices";
 static FIXED_PATH: &str = "fixed";
 static UNSORTED_PATH: &str = "unsorted";
 static SHELL: &str = "bash";
+static RUSTC_CHANNEL: &str = "master";
 
 // default rust edition to use for checking
 static DEFAULT_EDITION: &str = "2021";
@@ -215,13 +216,13 @@ pub fn discover(dir: &str) -> Result<Vec<ICE>> {
 }
 
 pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResult>>> {
-    env::set_var("RUSTUP_TOOLCHAIN", "nightly");
+    env::set_var("RUSTUP_TOOLCHAIN", RUSTC_CHANNEL);
 
     let output = Command::new("rustc").arg("--version").output()?;
 
     ensure!(
         output.status.success(),
-        "nightly toolchain is not installed, run `rustup install nightly`"
+        "master toolchain is not installed, run `rustup install nightly`"
     );
     let ices = discover(ICES_PATH)?;
     let fixed = discover(FIXED_PATH)?;
