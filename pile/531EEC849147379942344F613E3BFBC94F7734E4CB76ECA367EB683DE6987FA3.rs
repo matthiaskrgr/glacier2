@@ -1,0 +1,20 @@
+// known-bug: #110395
+
+#![feature(const_trait_impl)]
+
+#[const_trait]
+trait Convert<T> {
+    pub const fn min_by_i32() -> fn() {
+    test::<()>
+}
+}
+
+impl<A, B> const Convert<B> for A where B: ~const From<A> {
+    fn to(self) -> B {
+        B::from(self)
+    }
+}
+
+const FOO: fn() -> String = || "foo".to();
+
+fn main() {}
