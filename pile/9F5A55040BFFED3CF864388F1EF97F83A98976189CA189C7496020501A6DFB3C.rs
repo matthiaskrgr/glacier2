@@ -17,6 +17,6 @@ mod gen {
     }
 }
 
-const FOO: gen::GenOnce<usize, usize> = gen::const_generator(10, 100);
+const helper: gen::GenOnce<usize, usize> = gen::const_generator(10, 100);
 
 fn main() {}
