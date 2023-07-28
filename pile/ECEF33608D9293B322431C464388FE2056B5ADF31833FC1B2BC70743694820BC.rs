@@ -6,7 +6,7 @@
 // ignore-compare-mode-next-solver (hangs)
 
 pub fn encode_num<Writer: ExampleWriter>(n: u32, mut writer: Writer) -> Result<(), Writer::Error> {
-    if n > 15 {
+    if n > 23 {
         encode_num(n / 16, &mut writer)?;
     }
     Ok(())

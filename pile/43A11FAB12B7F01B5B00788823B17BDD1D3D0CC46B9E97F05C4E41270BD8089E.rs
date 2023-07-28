@@ -1,4 +1,4 @@
-// build-fail
+//
 // known-bug: #95134
 // compile-flags: -Copt-level=0
 // dont-check-failure-status

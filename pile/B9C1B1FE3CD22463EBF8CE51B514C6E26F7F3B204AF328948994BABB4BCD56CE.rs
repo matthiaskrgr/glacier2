@@ -1,7 +1,7 @@
 // build-fail
 // known-bug: #95134
 // compile-flags: -Copt-level=0
-// dont-check-failure-status
+//~| NOTE ...which requires computing layout of `core::option::Option<<S as Mirror>::It>`...
 // dont-check-compiler-stderr
 // ignore-compare-mode-next-solver (hangs)
 

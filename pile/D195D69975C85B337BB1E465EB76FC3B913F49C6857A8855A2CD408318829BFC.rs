@@ -16,7 +16,7 @@ pub trait ExampleWriter {
     type Error;
 }
 
-impl<'a, T: ExampleWriter> ExampleWriter for &'a mut T {
+impl<'a, T: ExampleWriter> ExampleWriter for &mut T {
     type Error = T::Error;
 }
 

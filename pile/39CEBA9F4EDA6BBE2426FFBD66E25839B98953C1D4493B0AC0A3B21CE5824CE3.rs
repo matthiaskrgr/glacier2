@@ -1,6 +1,6 @@
 // build-fail
 // known-bug: #95134
-// compile-flags: -Copt-level=0
+//~| NOTE cycle used when computing layout of `core::option::Option<<S as Mirror>::It>`
 // dont-check-failure-status
 // dont-check-compiler-stderr
 // ignore-compare-mode-next-solver (hangs)

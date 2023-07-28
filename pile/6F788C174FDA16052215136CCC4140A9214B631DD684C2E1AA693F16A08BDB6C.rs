@@ -1,5 +1,5 @@
 // build-fail
-// known-bug: #95134
+//~| NOTE see https://rustc-dev-guide.rust-lang.org/overview.html#queries and https://rustc-dev-guide.rust-lang.org/query.html for more information
 // compile-flags: -Copt-level=0
 // dont-check-failure-status
 // dont-check-compiler-stderr

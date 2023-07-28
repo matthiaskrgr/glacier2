@@ -1,7 +1,7 @@
 // build-fail
 // known-bug: #95134
 // compile-flags: -Copt-level=0
-// dont-check-failure-status
+//~| NOTE see https://rustc-dev-guide.rust-lang.org/overview.html#queries and https://rustc-dev-guide.rust-lang.org/query.html for more information
 // dont-check-compiler-stderr
 // ignore-compare-mode-next-solver (hangs)
 
