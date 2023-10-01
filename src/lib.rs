@@ -54,9 +54,16 @@ impl ICE {
 
     fn test(self) -> Result<TestResult> {
         let workdir = tempfile::tempdir()?;
+        let has_main = std::fs::read_to_string(std::fs::canonicalize(&self.path)?)
+            .unwrap_or_default()
+            .contains("fn main() {");
         let output = match self.mode {
             TestMode::RustFile => Command::new(RUSTC)
-                .args(["--edition", DEFAULT_EDITION])
+                .args(if !has_main {
+                    vec!["--crate-type", "lib", "--edition", DEFAULT_EDITION].into_iter()
+                } else {
+                    vec!["--edition", DEFAULT_EDITION].into_iter()
+                })
                 .arg(std::fs::canonicalize(&self.path)?)
                 .current_dir(workdir.path())
                 .output()?,
