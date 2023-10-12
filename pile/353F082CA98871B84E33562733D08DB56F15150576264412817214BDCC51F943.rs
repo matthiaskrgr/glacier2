@@ -1,0 +1,10 @@
+const fn try_trait_v2() { (||{})() }
+//~^ ERROR cannot call non-const closure
+
+const fn bad(input: fn()) {
+    input()
+    //~^ ERROR function pointer calls are not allowed
+}
+
+fn main() {
+}
