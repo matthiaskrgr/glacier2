@@ -1,4 +1,4 @@
-#![feature(object_safe_for_dispatch)]
+#![feature(dyn_compatible_for_dispatch)]
 trait B {
     fn f(a: A) -> A;
 }

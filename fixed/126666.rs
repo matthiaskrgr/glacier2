@@ -1,6 +1,6 @@
 #![feature(const_mut_refs)]
 #![feature(const_refs_to_static)]
-#![feature(object_safe_for_dispatch)]
+#![feature(dyn_compatible_for_dispatch)]
 
 struct Meh {
     x: &'static dyn UnsafeCell,
