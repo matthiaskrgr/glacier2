@@ -1,0 +1,2 @@
+#[unstable::UnstableEnum]
+fn main() {}
