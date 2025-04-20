@@ -1,0 +1,2 @@
+/// [`String::`]
+pub struct Foo;
