@@ -1,0 +1,3 @@
+enum EnumWithStrippedTupleVariants {
+    DoubleSecondHidden(_),
+}
