@@ -1,0 +1,5 @@
+#![feature(min_generic_const_args)]
+
+fn foo<T>() {
+    [0; size_of::<*mut T>()]
+}
