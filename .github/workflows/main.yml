@@ -18,8 +18,8 @@ jobs:
         run: rustup install nightly
       # install master installer
       - name: install rustup-toolchain-install-master
-      #  run: cargo install --debug --git https://github.com/kennytm/rustup-toolchain-install-master
-        run: cargo install --debug rustup-toolchain-install-master
+        run: cargo install --debug --git https://github.com/kennytm/rustup-toolchain-install-master
+      #  run: cargo install --debug rustup-toolchain-install-master
       - name: install master toolchain
         run: rustup-toolchain-install-master -f -n master -c rustc-dev llvm-tools rust-src clippy rustfmt --alt 
       - name: make master the default toolchain
